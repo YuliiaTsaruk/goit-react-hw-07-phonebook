@@ -8,10 +8,10 @@ import {
   StyledLabel,
 } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
+
 import { Report } from 'notiflix';
-import { addContact } from '../../redux/contactsSlice';
 import { selectContacts } from '../../redux/selectors';
+import { addContact } from '../../redux/operations';
 
 const contactSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too Short!').required('Required'),
@@ -26,26 +26,22 @@ export const ContactForm = () => {
   const contacts = useSelector(selectContacts);
 
   const handleAddContact = newContact => {
-    const contact = {
-      ...newContact,
-      id: nanoid(),
-    };
-
     const checkName = contacts.some(
       checkContact =>
         checkContact.name.toLocaleLowerCase() ===
-        contact.name.toLocaleLowerCase()
+        newContact.name.toLocaleLowerCase()
     );
 
     if (checkName) {
       Report.failure(
         'Notiflix Failure',
-        `Cannot add to contacts this name: ${contact.name} is already in contacts.`,
+        `Cannot add to contacts this name: ${newContact.name} is already in contacts.`,
         'Okay'
       );
       return;
     }
-    dispatch(addContact(contact));
+
+    dispatch(addContact(newContact));
   };
 
   return (
