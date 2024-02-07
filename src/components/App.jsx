@@ -3,9 +3,10 @@ import { ContactForm, Filter, ContactList } from 'components';
 import { GlobalStyle } from './GlobalStyle';
 import { Container, MaineTitle, Section, Title } from './App.styled';
 import { useSelector } from 'react-redux';
+import { selectContacts } from '../redux/selectors';
 
 export const App = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(selectContacts);
 
   return (
     <Container>

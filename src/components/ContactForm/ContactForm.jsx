@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Report } from 'notiflix';
 import { addContact } from '../../redux/contactsSlice';
+import { selectContacts } from '../../redux/selectors';
 
 const contactSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too Short!').required('Required'),
@@ -22,7 +23,7 @@ const contactSchema = Yup.object().shape({
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(selectContacts);
 
   const handleAddContact = newContact => {
     const contact = {
