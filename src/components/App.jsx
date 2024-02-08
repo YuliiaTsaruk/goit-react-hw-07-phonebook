@@ -10,6 +10,7 @@ import {
 } from '../redux/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from '../redux/operations';
+import { Toaster } from 'react-hot-toast';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -29,17 +30,18 @@ export const App = () => {
 
       <Section>
         <Title>Contacts</Title>
-        {isLoading && <p>Loading contacts...</p>}
-        {error && <p>{error}</p>}
 
         {contacts.length > 0 && !error && <Filter />}
+
+        {isLoading && <p>Loading contacts...</p>}
+        {error && <p>{error}</p>}
         {contacts.length === 0 && !isLoading && !error && (
           <p>You don't have any contacts yet</p>
         )}
 
         <ContactList />
       </Section>
-
+      <Toaster position="top-center" reverseOrder={false} />
       <GlobalStyle />
     </Container>
   );

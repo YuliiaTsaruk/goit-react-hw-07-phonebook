@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Report } from 'notiflix';
 import { selectContacts } from '../../redux/selectors';
 import { addContact } from '../../redux/operations';
+import toast from 'react-hot-toast';
 
 const contactSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too Short!').required('Required'),
@@ -42,6 +43,7 @@ export const ContactForm = () => {
     }
 
     dispatch(addContact(newContact));
+    toast.success('Successfully, new contact creted');
   };
 
   return (

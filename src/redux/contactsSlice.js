@@ -8,6 +8,7 @@ const contactsSlice = createSlice({
     items: [],
     isLoading: false,
     error: null,
+    isDeleting: false,
   },
 
   extraReducers: builder => {
@@ -36,13 +37,18 @@ const contactsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+      .addCase(deleteContact.pending, (state, action) => {
+        state.isDeleting = true;
+      })
       .addCase(deleteContact.fulfilled, (state, action) => {
         const contactId = action.payload.id;
+        state.isDeleting = false;
         state.isLoading = false;
         state.error = null;
         state.items = state.items.filter(contact => contact.id !== contactId);
       })
       .addCase(deleteContact.rejected, (state, action) => {
+        state.isDeleting = false;
         state.isLoading = false;
         state.error = action.payload;
       });
